@@ -1,0 +1,100 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Hub
+    network: arbitrum-one
+    source:
+      abi: Hub
+      address: '0x25620d76654caC426229C85bE8eAEB010Ea25c8F'
+      startBlock: 87065024
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/hub.ts
+      entities:
+        - Hub
+        - Bundle
+        - Token
+        - Pool
+        - Tier
+        - Tick
+        - Transaction
+        - Mint
+        - Burn
+        - Swap
+        - SwapTierData
+        - KyborgDayData
+        - PoolDayData
+        - PoolHourData
+        - TierDayData
+        - TierHourData
+        - TokenDayData
+        - TokenHourData
+        - Position
+        - PositionSnapshot
+      abis:
+        - name: Hub
+          file: ./abis/Hub.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: Manager
+          file: ./abis/Manager.json
+        - name: HubPositions
+          file: ./abis/HubPositions.json
+      eventHandlers:
+        - event: UpdateDefaultParameters(uint8,uint8)
+          handler: handleUpdateDefaultParameters
+        - event: PoolCreated(indexed address,indexed address,indexed bytes32)
+          handler: handlePoolCreated
+        - event: UpdatePool(indexed bytes32,uint8,uint8)
+          handler: handleUpdatePool
+        - event: UpdateTier(indexed bytes32,indexed uint8,indexed uint24,uint128,uint8)
+          handler: handleUpdateTier
+        - event: Mint(indexed bytes32,indexed address,indexed uint256,uint8,int24,int24,address,uint256,uint96,uint256,uint256)
+          handler: handleMint
+        - event: Burn(indexed bytes32,indexed address,indexed uint256,uint8,int24,int24,uint256,uint96,uint256,uint256,uint256,uint256)
+          handler: handleBurn
+        - event: Swap(indexed bytes32,indexed address,indexed address,uint256,uint256,int256,int256,uint256,uint256,uint256[])
+          handler: handleSwap
+        - event: SetLimitOrderType(indexed bytes32,indexed address,indexed uint256,uint8,int24,int24,uint8)
+          handler: handleSetLimitOrderType
+        - event: CollectSettled(indexed bytes32,indexed address,indexed uint256,uint8,int24,int24,uint256,uint96,uint256,uint256,uint256,uint256)
+          handler: handleCollectSettled
+        - event: Deposit(indexed address,indexed uint256,indexed address,uint256,address)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed uint256,indexed address,uint256,address)
+          handler: handleWithdraw
+        # - event: Settle(indexed bytes32,indexed uint8,indexed int24,int24,uint96)
+        #   handler: handleSettle
+  - kind: ethereum
+    name: Manager
+    network: arbitrum-one
+    source:
+      abi: Manager
+      address: '0xdbc0105F6A0838FFF075a3A101EfD8CCf857B501'
+      startBlock: 87065024
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/manager.ts
+      entities:
+        - Position
+        - PositionSnapshot
+      abis:
+        - name: Manager
+          file: ./abis/Manager.json
+        - name: Hub
+          file: ./abis/Hub.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
