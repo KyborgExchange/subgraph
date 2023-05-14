@@ -5,7 +5,7 @@ import { ONE_BD, ONE_BI, STABLE_COINS, USDC_ADDRESS, WETH_ADDRESS, WHITELIST_TOK
 import { getPoolId, getTierId } from './id'
 
 // TODO: find the right amount later
-const MINIMUM_ETH_LOCKED = BigDecimal.fromString('0')
+const MINIMUM_ETH_LOCKED = BigDecimal.fromString('1')
 
 const PRICE_DENOM = ONE_BI.leftShift(144).toBigDecimal()
 export function sqrtPriceX72ToTokenPrices(sqrtPriceX72: BigInt, token0: Token, token1: Token): BigDecimal[] {
@@ -19,7 +19,7 @@ export function sqrtPriceX72ToTokenPrices(sqrtPriceX72: BigInt, token0: Token, t
   return [price0, price1]
 }
 
-const IS_USDC_TOKEN0_IN_WETH_POOL = WETH_ADDRESS > USDC_ADDRESS
+const IS_USDC_TOKEN0_IN_WETH_POOL = USDC_ADDRESS < WETH_ADDRESS
 
 /**
  * NOTE:
