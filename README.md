@@ -1,4 +1,4 @@
-# Muffin Subgraph
+# Kyborg Subgraph
 
 ### ⚠️ This subgraph is currently in alpha version
 
